@@ -9,8 +9,10 @@ from DatasetLoader import load_dataset
 from Training import train_model, plot_training_graphs
 from Testing import test_model, result_processing
 
+import argparse
+
 import warnings
-warnings.filterwarnings('always')
+warnings.filterwarnings("ignore")
 
 ########################################################################
 # define global variables
@@ -24,6 +26,7 @@ class Logger:
             pass
 
     def log(self, log):
+        print(log)
         with open(self.log_path, 'a') as w:
             w.write(log)
             w.write("\n")
@@ -32,9 +35,9 @@ class Logger:
         return self.log_path
 
 
-AVAILABLE_CLASSES_dict = [
-    [ 'Malignant', 'Non Malignant', ],
-    [ 'Bengin', 'Malignant', 'Normal', ]
+AVAILABLE_CLASSES_LIST = [
+    [ 'Malignant', 'Non Malignant' ],
+    [ 'Bengin', 'Malignant', 'Normal' ]
 ]
 
 
@@ -69,7 +72,7 @@ def run_main(
         var_batch_size,
         var_lr,
         var_wd,
-        var_class=0
+        var_class=0,
     ):
 
     ########################################################################
@@ -77,10 +80,10 @@ def run_main(
     ########################################################################
 
     #ANCHOR - define class names
-    AVAILABLE_CLASSES = AVAILABLE_CLASSES_dict[var_class]
+    AVAILABLE_CLASSES = AVAILABLE_CLASSES_LIST[var_class]
 
     # define dataset file path
-    Dataset = '..\\dataset'
+    Dataset = '.\\dataset'
 
     # define unique id for output path using timestamp
     timestamp = time.strftime("%Y-%m-%d--%H-%M-%S", time.localtime())
@@ -229,14 +232,16 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('-m' , '--Model', type=str, default='resnet50')
     parser.add_argument('-tl', '--TransferLearn', type=bool, choices=[True, False], default=False)
-    parser.add_argument('-e' , '--Epochs', type=int, default=32)
+    parser.add_argument('-e' , '--Epochs', type=int, default=2)
+    parser.add_argument('-b',  '--BatchSize', type=int, default=32)
     parser.add_argument('-lr', '--LearningRate', type=float, default=0.001)
     parser.add_argument('-wd', '--WeightDecay', type=float, default=0.005)
-    parser.add_argument('-c' , '--Classes', type=int, choices=[0, 1], default=1)
+    parser.add_argument('-c' , '--Classes', type=int, choices=[0, 1], default=0)
     args = parser.parse_args()
     return args
 
 
 if __name__ == "__main__":
-    args = parse_arguments()
+
+    args = list(vars(parse_arguments()).values())
     run_main(*args)

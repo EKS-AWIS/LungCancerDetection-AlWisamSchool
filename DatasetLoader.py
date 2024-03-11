@@ -5,8 +5,8 @@ from torchvision import datasets
 def load_dataset(dataset_path, transform, batch_size, num_workers, shuffle):
 
     # load training and validation set
-    train_set = dataset_path + '/train'
-    valid_set = dataset_path + '/valid'
+    train_set = dataset_path + '\\train'
+    valid_set = dataset_path + '\\valid'
 
     train_data = datasets.ImageFolder(train_set, transform=transform)
     valid_data = datasets.ImageFolder(valid_set, transform=transform)
