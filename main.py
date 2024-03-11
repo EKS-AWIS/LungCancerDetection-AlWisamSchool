@@ -232,7 +232,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('-m' , '--Model', type=str, default='resnet50')
     parser.add_argument('-tl', '--TransferLearn', type=bool, choices=[True, False], default=False)
-    parser.add_argument('-e' , '--Epochs', type=int, default=2)
+    parser.add_argument('-e' , '--Epochs', type=int, default=32)
     parser.add_argument('-b',  '--BatchSize', type=int, default=32)
     parser.add_argument('-lr', '--LearningRate', type=float, default=0.001)
     parser.add_argument('-wd', '--WeightDecay', type=float, default=0.005)
